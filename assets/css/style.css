@@ -1,0 +1,50 @@
+:root {
+    --border-radius: .5rem;
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+}
+
+h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.main-container {
+    padding: 2rem 1rem;
+}
+
+.card {
+    box-shadow: none;
+}
+
+.form-input {
+    display: block;
+    width: 100%;
+    padding: 3%;
+    font-size: 1.2rem;
+    border: 1px solid black;
+    border-radius: var(--border-radius);
+}
+
+.btn {
+    width: 100%;
+    border: none;
+    font-size: 1.2rem;
+    padding: 3%;
+    border-radius: var(--border-radius);
+    margin: 5% 0;
+}
+
+.search-btn {
+    background-color: #2884cf;
+}
+
+.search-btn:hover {
+    background-color: #6dace0;
+}
+
+.city-card {
+    border-bottom: 1px solid black;
+}
