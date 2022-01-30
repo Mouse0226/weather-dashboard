@@ -1,5 +1,6 @@
 var searchFormEl = document.querySelector("#city-form");
 var cityInputEl = document.querySelector("#cityname");
+var weatherContainerEl = document.querySelector("#weather-container");
 
 var formSubmitHandler = function(event) {
     event.preventDefault();
@@ -21,7 +22,7 @@ var getCityCoordinates = function(city) {
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
-                    getCityWeather(data.coord.lat, data.coord.lon);
+                    getCityWeather(data.coord.lat, data.coord.lon, city);
                 });
             } else {
                 alert("Error: City Not Found");
@@ -32,7 +33,7 @@ var getCityCoordinates = function(city) {
         });
 };
 
-var getCityWeather = function(lat, lon) {
+var getCityWeather = function(lat, lon, city) {
     // using city coordinates, get city weather info using one call api url
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=8a610a4f996190e02758011b8e6d8a9b&units=imperial";
     
@@ -40,7 +41,7 @@ var getCityWeather = function(lat, lon) {
         .then(function(response) {
             if(response.ok) {
                 response.json().then(function(data) {
-                    console.log(data);
+                    displayWeather(data, city);
                 });
             } else {
                 alert("Error retrieving weather information, please try again later");
@@ -50,5 +51,21 @@ var getCityWeather = function(lat, lon) {
             alert("Unable to connect to OpenWeather");
         });
 };
+
+var displayWeather = function(weather, city) {
+    // clear old content
+    weatherContainerEl.textContent = "";
+
+    // derive date from unix timestamp
+    var timestamp = weather.current.dt;
+    // multiply by 1000 for milliseconds
+    var date = new Date(timestamp * 1000);
+    var formatDate = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear();
+
+    var titleEl = document.createElement("h2");
+    titleEl.textContent = city + " (" + formatDate + ")";
+
+    weatherContainerEl.appendChild(titleEl);
+}
 
 searchFormEl.addEventListener("submit", formSubmitHandler);
