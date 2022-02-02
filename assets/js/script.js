@@ -1,6 +1,8 @@
 var searchFormEl = document.querySelector("#city-form");
 var cityInputEl = document.querySelector("#cityname");
 var weatherContainerEl = document.querySelector("#weather-container");
+var fiveDayContainerEl = document.querySelector("#5-day-container");
+
 
 var formSubmitHandler = function(event) {
     event.preventDefault();
@@ -23,6 +25,7 @@ var getCityCoordinates = function(city) {
             if (response.ok) {
                 response.json().then(function(data) {
                     getCityWeather(data.coord.lat, data.coord.lon, city);
+                    getFiveDay(data.coord.lat, data.coord.lon);
                 });
             } else {
                 alert("Error: City Not Found");
@@ -61,11 +64,53 @@ var displayWeather = function(weather, city) {
     // multiply by 1000 for milliseconds
     var date = new Date(timestamp * 1000);
     var formatDate = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear();
-
+    
+    // Create Element to Display City and Date
     var titleEl = document.createElement("h2");
-    titleEl.textContent = city + " (" + formatDate + ")";
+    titleEl.textContent = city + " (" + formatDate + ") ";
+
+    // Create Element to Display Weather Icon
+    var iconEl = document.createElement("img");
+    iconEl.src = "http://openweathermap.org/img/wn/" + weather.current.weather[0].icon +"@2x.png";
+    iconEl.width = "45";
+    iconEl.height = "45";
+    iconEl.alt = "Weather Icon";
+
+    // Create Element to Display Temp
+    var tempEl = document.createElement("p");
+    tempEl.textContent = "Temp: " + weather.current.temp + "°F";
+
+    // Create Element to Display Wind
+    var windEl = document.createElement("p");
+    windEl.textContent = "Wind: " + weather.current.wind_speed + " MPH";
+
+    // Create Element to Display Humidity
+    var humidityEl = document.createElement("p");
+    humidityEl.textContent = "Humidity: " + weather.current.humidity + "%";
+
+    // Create Element to Display UVI
+    var uviEl = document.createElement("p");
+    uviEl.textContent = "UV Index: " + weather.current.uvi;
+
+    if (weather.current.uvi >= 6) {
+        uviEl.classList = "uv-control has-text-white has-background-danger-dark";
+    } else if (weather.current.uvi >= 3) {
+        uviEl.classList = "uv-control has-text-white has-background-warning-dark";
+    } else {
+        uviEl.classList = "uv-control has-text-white has-background-success-dark";
+    }
 
     weatherContainerEl.appendChild(titleEl);
-}
+    weatherContainerEl.appendChild(iconEl);
+    weatherContainerEl.appendChild(tempEl);
+    weatherContainerEl.appendChild(windEl);
+    weatherContainerEl.appendChild(humidityEl);
+    weatherContainerEl.appendChild(uviEl);
+    weatherContainerEl.classList = "weather-container";
+};
+
+var getFiveDay = function(lat, lon) {
+    
+};
 
 searchFormEl.addEventListener("submit", formSubmitHandler);

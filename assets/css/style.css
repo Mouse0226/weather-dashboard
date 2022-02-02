@@ -48,3 +48,24 @@ h2 {
 .city-card {
     border-bottom: 1px solid black;
 }
+
+.weather-container {
+    padding: 0.75rem;
+    border: 1px solid black;
+}
+
+#weather-container > h2, #weather-container > img {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#weather-container > p {
+    margin: 1.2rem 0;
+}
+
+.uv-control {
+    display: inline-block;
+    padding: 0 10px;
+    border-radius: var(--border-radius);
+    margin: 0 !important;
+}
