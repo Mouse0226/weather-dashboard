@@ -1,7 +1,7 @@
 var searchFormEl = document.querySelector("#city-form");
 var cityInputEl = document.querySelector("#cityname");
 var weatherContainerEl = document.querySelector("#weather-container");
-var fiveDayContainerEl = document.querySelector("#5-day-container");
+var fiveDayContainerEl = document.querySelector("#five-day-container");
 
 
 var formSubmitHandler = function(event) {
@@ -25,7 +25,6 @@ var getCityCoordinates = function(city) {
             if (response.ok) {
                 response.json().then(function(data) {
                     getCityWeather(data.coord.lat, data.coord.lon, city);
-                    getFiveDay(data.coord.lat, data.coord.lon);
                 });
             } else {
                 alert("Error: City Not Found");
@@ -45,6 +44,7 @@ var getCityWeather = function(lat, lon, city) {
             if(response.ok) {
                 response.json().then(function(data) {
                     displayWeather(data, city);
+                    displayFiveDay(data);
                 });
             } else {
                 alert("Error retrieving weather information, please try again later");
@@ -109,8 +109,21 @@ var displayWeather = function(weather, city) {
     weatherContainerEl.classList = "weather-container";
 };
 
-var getFiveDay = function(lat, lon) {
-    
+var displayFiveDay = function(data) {
+    // clear old content
+    fiveDayContainerEl.textContent = "";
+
+    var titleEl = document.createElement("h2");
+    titleEl.textContent = "5 Day Forecast:";
+    fiveDayContainerEl.appendChild(titleEl);
+
+    // initialize i to 1 and loop until 6 to ignore first position in array which is current date information
+    for (var i = 1; i < 6; i++) {
+        var cardEl = document.createElement("div");
+        cardEl.classList = "card";
+
+        fiveDayContainerEl.appendChild(cardEl);
+    };
 };
 
 searchFormEl.addEventListener("submit", formSubmitHandler);
