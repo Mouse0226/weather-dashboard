@@ -69,3 +69,19 @@ h2 {
     border-radius: var(--border-radius);
     margin: 0 !important;
 }
+
+.five-day {
+    display: inline-block;
+    background-color: rgb(40, 56, 87);
+    color: white;
+    font-weight: 600;
+    margin: 0.5rem;
+    width: 10rem;
+}
+
+@media screen and (max-width: 768px) {
+    .five-day {
+        width: 95%;
+        text-align: center;
+    }
+}

@@ -1,6 +1,7 @@
 var searchFormEl = document.querySelector("#city-form");
 var cityInputEl = document.querySelector("#cityname");
 var weatherContainerEl = document.querySelector("#weather-container");
+var fiveDayText = document.querySelector("#five-day-text");
 var fiveDayContainerEl = document.querySelector("#five-day-container");
 
 
@@ -109,18 +110,51 @@ var displayWeather = function(weather, city) {
     weatherContainerEl.classList = "weather-container";
 };
 
-var displayFiveDay = function(data) {
+var displayFiveDay = function(weather) {
     // clear old content
+    fiveDayText.textContent = "";
     fiveDayContainerEl.textContent = "";
 
     var titleEl = document.createElement("h2");
     titleEl.textContent = "5 Day Forecast:";
-    fiveDayContainerEl.appendChild(titleEl);
+    fiveDayText.appendChild(titleEl);
 
     // initialize i to 1 and loop until 6 to ignore first position in array which is current date information
     for (var i = 1; i < 6; i++) {
+        // create card div
         var cardEl = document.createElement("div");
-        cardEl.classList = "card";
+        cardEl.classList = "five-day column";
+
+        // get date
+        var timestamp = weather.daily[i].dt;
+        var date = new Date(timestamp * 1000);
+        var formatDate = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear();
+        var dateEl = document.createElement("p");
+        dateEl.textContent = formatDate;
+        cardEl.appendChild(dateEl);
+
+        // get icon
+        var iconEl = document.createElement("img");
+        iconEl.src = "http://openweathermap.org/img/wn/" + weather.daily[i].weather[0].icon + "@2x.png";
+        iconEl.width = "45";
+        iconEl.height = "45";
+        iconEl.alt = "Five Day Weather Icon";
+        cardEl.appendChild(iconEl);
+
+        // get temp
+        var tempEl = document.createElement("p");
+        tempEl.textContent = "Temp: " + weather.daily[i].temp.max + "°F";
+        cardEl.appendChild(tempEl);
+
+        // get wind
+        var windEl = document.createElement("p");
+        windEl.textContent = "Wind: " + weather.daily[i].wind_speed + " MPH";
+        cardEl.appendChild(windEl);
+
+        // get humidity
+        var humidityEl = document.createElement("p");
+        humidityEl.textContent = "Humidity: " + weather.daily[i].humidity + "%";
+        cardEl.appendChild(humidityEl);
 
         fiveDayContainerEl.appendChild(cardEl);
     };
