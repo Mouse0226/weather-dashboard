@@ -34,15 +34,23 @@ h2 {
     font-size: 1.2rem;
     padding: 3%;
     border-radius: var(--border-radius);
-    margin: 5% 0;
+    margin: 2% 0;
 }
 
-.search-btn {
+.search-btn, .clear-btn {
     background-color: #2884cf;
 }
 
-.search-btn:hover {
+.search-btn:hover, .clear-btn:hover {
     background-color: #6dace0;
+}
+
+.history-btn {
+    background-color: rgb(168, 168, 168);
+}
+
+.history-btn:hover {
+    background-color: rgb(201, 201, 201);
 }
 
 .city-card {
